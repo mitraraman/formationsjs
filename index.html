@@ -53,23 +53,54 @@
 				<div class="container">
 					<div class="main-content">
 						<noscript>You must have JavaScript enabled to use this site.</noscript>
-						<div class="col-md-10 stage-container">
+						<div class="col-md-9 stage-container">
+							<h2>Stage:<small>Frame 1/1</small></h2>
 							<canvas id="stage-canvas" width="800" height="400" data-resize="full">
 								Your browser does not support the &lt;canvas&gt; element!
 							</canvas>
 						</div>
-						<div class="col-md-2 dancers-list">
-							<h3>Dancers</h3>
-							<div class="list-group" id="dancers">
-								<a href="#" class="dancer list-group-item">Dan</a>
-								<a href="#" class="dancer list-group-item">Dan</a>
-								<a href="#" class="dancer list-group-item">Dan</a>
-								<a href="#" class="dancer list-group-item">Dan</a>
-							</ul>
-					</div>
-					<ul>
-
-					</ul>
+						<div class="col-md-3">
+							<h2>Things</h2>
+							<div class="dancers-list">
+								<div class="panel panel-default">
+									<div data-toggle="collapse" href="#add-dancer-form" class="panel-heading">
+										<div class="panel-title text-center">
+											Add Dancer
+										</div>
+									</div>
+										<div id="add-dancer-form" class="panel-collapse collapse">
+											<div class="panel-body">
+											<div class="form-group">
+												<label for="addDancerName">Name</label>
+												<input type="text" class="form-control" id="addDancerName"
+															 placeholder="Enter name">
+											</div>
+											<div class="form-group">
+												<select class="form-control col-xs-1" id="addDancerGender">
+													<option>Male</option>
+													<option>Female</option>
+												</select>
+												<select class="form-control" id="addDancerColor">
+													<option>Pink</option>
+													<option>Blue</option>
+													<option>Yellow</option>
+													<option>Orange</option>
+													<option>Purple</option>
+													<option>Green</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<button type="button" class="btn btn-primary">Add</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading">Dancers</div>
+									<div class="list-group" id="dancers" />
+								</div>
+							</div>
+						</div>
 				</div>
 
 
@@ -84,6 +115,12 @@
 					var stage  = new Stage(document.getElementById('stage-canvas'));
 					stage.setMarkers(6,3);
 					stage.draw();
+					stage.addDancer("Dan", "M", "pink");
+					stage.addDancer("Sid", "M", "blue");
+					stage.addDancer("Samir", "M", "yellow");
+					stage.addDancer("Mitra", "F", "pink");
+					stage.addDancer("Shaina", "F", "blue");
+					stage.addDancer("Shalini", "F", "yellow");
 				</script>
 
 				<script type="text/javascript">

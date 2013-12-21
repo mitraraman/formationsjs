@@ -11,3 +11,16 @@ body {
 #stage-canvas {
 		border: 1px solid #444;
 }
+
+.dancers-list {
+		text-align: left
+}
+.add-dancer-head {
+
+}
+#addDancerGender {
+		width: 100px;
+}
+#addDancerColor {
+		width: 100px;
+}

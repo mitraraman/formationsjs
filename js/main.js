@@ -1,14 +1,14 @@
 function Stage(canvas) {
 		this.canvas = canvas;
 		this.context = canvas.getContext('2d');
-
 		//In case browser doesn't support dashed lines
 		if (!this.context.setLineDash) {
-				this.context.setLineDash = function() {}
+				this.context.setLineDash = function() {};
 		}
 
-		this.markers = []
-		this.dancers = []
+		this.markers = [];
+		this.dancerCount = 0;
+		this.dancers = new DancersList(document.getElementById('dancers'));
 }
 
 Stage.prototype.draw = function() {
@@ -18,17 +18,15 @@ Stage.prototype.draw = function() {
 				this.markers[id1].draw(this);
 		}
 
-		for (id2 in this.dancers) {
-				if(this.dancers[id2] === this._focus ||
-					 this.dancers[id2] === this._selected) {
+		for (id2 in this.dancers.array) {
+				if(this.dancers.array[id2] === this.dancers.active) {
 						continue;
 				}
-				this.dancers[id2].draw(this);
+				this.dancers.array[id2].draw(this);
 		}
 
-		//always draw focus last
-		this._focus && this._focus.draw(this);
-		this._selected && this._selected.draw(this);
+		//always draw active dancer last
+		this.dancers.active && this.dancers.active.draw(this);
 }
 
 Stage.prototype.setMarkers = function(numHorz, numVert) {
@@ -49,6 +47,43 @@ Stage.prototype.setMarkers = function(numHorz, numVert) {
 		}
 }
 
+Stage.prototype.addDancer = function(name, gender, color) {
+		this.dancerCount++;
+		var self = this;
+		var dancer = new Dancer(this.dancerCount, name, gender, color);
+		dancer.element.click(function() {
+				self.dancers.active &&
+						self.dancers.active.element.removeClass("active");
+				dancer.element.addClass("active");
+				self.dancers.active = dancer;
+		});
+		this.dancers.push(dancer);
+
+}
+
+function DancersList(el) {
+		this.element = $(el);
+		this.array = [];
+		this.active = null;
+}
+
+DancersList.prototype.push = function (dancer) {
+		this.array.push(dancer);
+		this.element.append(dancer.element);
+}
+
+function Dancer(id, name, gender, color) {
+		this.id = id;
+		this.name = name;
+		this.gender = gender;
+		this.color = color;
+		this.element = $('<a>' + id +". "+ name + '</a>')
+				.addClass("dancer list-group-item");
+}
+
+Dancer.prototype.draw = function() {
+
+}
 
 function Marker(x, y, mark) {
 		this.x = x;
