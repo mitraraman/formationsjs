@@ -98,7 +98,7 @@ Stage.prototype._onMouseMove = function(event) {
 		this.context.save();
 		this.context.beginPath();
 		this.context.fillStyle = "green";
-		this.context.rect(this.snapH(pos.x)-10,this.snapV(pos.y)-10,20,20);
+		this.context.arc(this.snapH(pos.x-8),this.snapV(pos.y-8),16,0,2*Math.PI);
 		this.context.fill();
 
 		this.context.restore();
