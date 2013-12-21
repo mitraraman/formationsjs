@@ -1,0 +1,13 @@
+body {
+		padding: 50px;
+}
+
+
+.main-content {
+		padding: 40px 15px;
+		text-align: center;
+}
+
+#stage-canvas {
+		border: 1px solid #444;
+}

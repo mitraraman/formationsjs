@@ -14,21 +14,84 @@
 
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/custom.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+
+				<!-- BOOTSTRAP -->
+				<!-- Latest compiled and minified CSS -->
+				<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+				<!-- Optional theme -->
+				<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+				<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+					<div class="container">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+							<a class="navbar-brand" href="#">Formations.js</a>
+						</div>
+						<div class="collapse navbar-collapse">
+							<ul class="nav navbar-nav">
+								<li class="active"><a href="#">Home</a></li>
+								<li><a href="#about">About</a></li>
+								<li><a href="#contact">Contact</a></li>
+							</ul>
+						</div><!--/.nav-collapse -->
+					</div>
+				</div>
+
+				<div class="container">
+					<div class="main-content">
+						<noscript>You must have JavaScript enabled to use this site.</noscript>
+						<div class="col-md-10 stage-container">
+							<canvas id="stage-canvas" width="800" height="400" data-resize="full">
+								Your browser does not support the &lt;canvas&gt; element!
+							</canvas>
+						</div>
+						<div class="col-md-2 dancers-list">
+							<h3>Dancers</h3>
+							<div class="list-group" id="dancers">
+								<a href="#" class="dancer list-group-item">Dan</a>
+								<a href="#" class="dancer list-group-item">Dan</a>
+								<a href="#" class="dancer list-group-item">Dan</a>
+								<a href="#" class="dancer list-group-item">Dan</a>
+							</ul>
+					</div>
+					<ul>
+
+					</ul>
+				</div>
+
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+				<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 
+				<script type="text/javascript">
+					var stage  = new Stage(document.getElementById('stage-canvas'));
+					stage.setMarkers(6,3);
+					stage.draw();
+				</script>
+
+				<script type="text/javascript">
+					$('.dancer').click(function() {
+					  $('.dancer').removeClass("active");
+					  $(this).addClass("active");
+					});
+				</script>
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
