@@ -1,8 +1,27 @@
+/* Colors for vardi*/
+
+.dancer .pink {
+		background-color: #D61D5C;
+}
+.dancer .purple {
+		background-color: #43155B;
+}
+.dancer .green {
+		background-color: #64A363;
+}
+.dancer .blue {
+		background-color: #078FB1;
+}
+.dancer .yellow {
+		background-color: #F7E418;
+}
+.dancer .orange {
+		background-color: #A23416;
+}
+
 body {
 		padding: 50px;
 }
-
-
 .main-content {
 		padding: 40px 15px;
 		text-align: center;
@@ -14,6 +33,7 @@ body {
 
 .dancers-list {
 		text-align: left
+}
 }
 .add-dancer-head {
 

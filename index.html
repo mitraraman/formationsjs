@@ -90,14 +90,18 @@
 												</select>
 											</div>
 											<div class="form-group">
-												<button type="button" class="btn btn-primary">Add</button>
+												<button type="button" class="btn btn-primary" id="addDancerButton">
+													Add
+												</button>
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="panel panel-default">
 									<div class="panel-heading">Dancers</div>
-									<div class="list-group" id="dancers" />
+									<div class="list-group" id="dancers">
+										<a class="dancer list-group-item"> 0. Winner <span class="badge">P</span></a>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -109,6 +113,9 @@
 				<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
         <script src="js/plugins.js"></script>
+
+        <script src="js/dancer.js"></script>
+        <script src="js/marker.js"></script>
         <script src="js/main.js"></script>
 
 				<script type="text/javascript">
@@ -118,17 +125,23 @@
 					stage.addDancer("Dan", "M", "pink");
 					stage.addDancer("Sid", "M", "blue");
 					stage.addDancer("Samir", "M", "yellow");
-					stage.addDancer("Mitra", "F", "pink");
-					stage.addDancer("Shaina", "F", "blue");
-					stage.addDancer("Shalini", "F", "yellow");
+					stage.addDancer("Mitra", "F", "green");
+					stage.addDancer("Shaina", "F", "purple");
+					stage.addDancer("Shalini", "F", "orange");
 				</script>
 
 				<script type="text/javascript">
-					$('.dancer').click(function() {
-					  $('.dancer').removeClass("active");
-					  $(this).addClass("active");
+					$("#addDancerButton").click(function() {
+					  var name = $("#addDancerName").val();
+  					var gender = $("#addDancerGender").val()[0];
+  					var color = $("#addDancerColor").val().toLowerCase();
+  					stage.addDancer(name, gender, color);
 					});
 				</script>
+
+
+
+
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
