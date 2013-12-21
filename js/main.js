@@ -7,6 +7,9 @@ function Stage(canvas) {
 		}
 
 		this.markers = [];
+		this.markerHorzDist = 0;
+		this.markerVertDist = 0;
+
 		this.dancerCount = 0;
 		this.dancers = new DancersList(document.getElementById('dancers'));
 
@@ -45,6 +48,10 @@ Stage.prototype.setMarkers = function(numHorz, numVert) {
 		this.markers = [];
 		var spaceHorz = this.canvas.width / (2*(numHorz+1));
 		var spaceVert = this.canvas.height / (2*(numVert+1));
+
+		this.markerHorzDist = spaceHorz;
+		this.markerVertDist = spaceVert;
+
 		for (var i = 1; i < 2*(numHorz+1); i++) {
 				// if i even, then actual marker, else it's a mid
 				var m = new Marker(spaceHorz*i, 0, (i % 2 === 0));
@@ -75,4 +82,30 @@ Stage.prototype.addDancer = function(name, gender, color) {
 				}
 		});
 		this.dancers.push(dancer);
+}
+
+Stage.prototype.snapH = function(x) {
+		return Math.floor((x+25)/(this.markerHorzDist/2))*(this.markerHorzDist/2);
+}
+
+Stage.prototype.snapV = function(x) {
+		return Math.floor((x+25)/(this.markerVertDist/2))*(this.markerVertDist/2);
+}
+Stage.prototype._onMouseMove = function(event) {
+		var pos = offsets(event);
+
+		this.draw();
+		this.context.save();
+		this.context.beginPath();
+		this.context.fillStyle = "green";
+		this.context.rect(this.snapH(pos.x)-10,this.snapV(pos.y)-10,20,20);
+		this.context.fill();
+
+		this.context.restore();
+}
+Stage.prototype._onMouseDown = function(event) {
+}
+Stage.prototype._onMouseUp = function(event) {
+}
+Stage.prototype._onClick = function(event) {
 }
