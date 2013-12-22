@@ -3,7 +3,7 @@ function Marker(x, y, mark) {
 		this.y = y;
 		this.isMark = mark;
 		this.isHorz = (y === 0);
-		console.log(x,y,mark,this.isHorz);
+//		console.log(x,y,mark,this.isHorz);
 }
 
 Marker.prototype.draw = function(stage) {

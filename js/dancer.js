@@ -30,8 +30,8 @@ function Dancer(id, name, gender, color) {
 				.addClass("dancer list-group-item ");
 
 		this.r = 16
-		this.x = null;
-		this.y = null;
+		this.xs = [];
+		this.ys = [];
 }
 
 Dancer.prototype.serialize = function(markerHorzDist, markerVertDist) {
@@ -41,47 +41,52 @@ Dancer.prototype.serialize = function(markerHorzDist, markerVertDist) {
 				name: this.name,
 				gender: this.gender,
 				color: this.color,
+				relxs: [],
+				relys: [],
+				posxs: [],
+				posys: [],
 		};
 
-		if (this.x === null) {
-				dancerObject['relx'] =  null;
-				dancerObject['posx'] =  null;
-		} else {
-				dancerObject['relx'] =  Math.floor(this.x/markerHorzDist);
-				dancerObject['posx'] =  this.x;
-		}
+		var idx;
+		for ( idx in this.xs) {
+				var x = this.xs[idx];
+				var y = this.ys[idx];
 
-		if (this.y === null) {
-				dancerObject['rely'] =  null;
-				dancerObject['posy'] =  null;
-		} else {
-				dancerObject['rely'] =  Math.floor(this.y/markerVertDist);
-				dancerObject['posy'] =  this.y;
-		}
+				if (x !== undefined) {
+						dancerObject['relxs'][idx] =  Math.floor(x/markerHorzDist);
+						dancerObject['posxs'][idx] =  x;
+				}
 
+				if (y !== undefined) {
+						dancerObject['relys'][idx] =  Math.floor(y/markerVertDist);
+						dancerObject['posys'][idx] =  y;
+				}
+		}
 		return dancerObject;
 }
 
 Dancer.prototype.draw = function(stage) {
 		var ctx = stage.context;
-		if (this.x !== null && this.y !== null) {
+		var x = this.xs[stage.frame];
+		var y = this.ys[stage.frame];
+		if (x !== undefined && y !== undefined) {
 				ctx.save();
 				ctx.beginPath();
 				ctx.fillStyle = COLORS[this.color];
 				if (this.gender === "M") {
-						ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
+						ctx.arc(x, y, this.r, 0, 2*Math.PI);
 				} else {
-						ctx.rect(this.x-this.r, this.y-this.r, this.r*2, this.r*2);
+						ctx.rect(x-this.r, y-this.r, this.r*2, this.r*2);
 				}
 				ctx.closePath();
 				ctx.fill();
 				ctx.fillStyle = "darkgrey";
 				ctx.beginPath();
-				ctx.fillText(this.id, this.x, this.y+4);
+				ctx.fillText(this.id, x, y+4);
 				ctx.closePath();
 
 				if(stage.displayNames) {
-						ctx.translate(this.x, this.y-this.r*1.5);
+						ctx.translate(x, y-this.r*1.5);
 						console.log("drawing name");
 						ctx.fillStyle="black";
 						ctx.textAlign = "left";
@@ -97,9 +102,9 @@ Dancer.prototype.draw = function(stage) {
 				ctx.save();
 				ctx.strokeStyle = "black";
 				if (this.gender === "M") {
-						ctx.arc(this.x, this.y, this.r+3, 0, 2*Math.PI);
+						ctx.arc(x, y, this.r+3, 0, 2*Math.PI);
 				} else {
-						ctx.rect(this.x-this.r-3, this.y-this.r-3, this.r*2+6, this.r*2+6);
+						ctx.rect(x-this.r-3, y-this.r-3, this.r*2+6, this.r*2+6);
 				}
 				ctx.stroke();
 				ctx.restore();

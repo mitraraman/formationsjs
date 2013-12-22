@@ -10,6 +10,9 @@ function Stage(canvas) {
 				this.context.setLineDash = function() {};
 		}
 
+		this.frameCount = 1;
+		this.frame = 0;
+
 		this.markers = [];
 		this.markerLayout = [0,0];
 		this.markerHorzDist = 0;
@@ -35,7 +38,8 @@ Stage.prototype.serialize = function() {
 		var stageObject = {
 				markerLayout: this.markerLayout,
 				dancerCount: this.dancerCount,
-				dancers: []
+				dancers: [],
+				frameCount: this.frameCount
 		};
 		var id;
 		for (id in this.dancers.array) {
@@ -48,18 +52,22 @@ Stage.prototype.serialize = function() {
 
 }
 
-Stage.deserializeInto = function(string, stage) {
-		var stageObject = JSON.parse(unescape(string));
+Stage.deserializeInto = function(str, stage) {
+		if(str[str.length-1] === '/') {
+				str[str.length-1] = ' ';
+		}
+		var stageObject = JSON.parse(unescape(str));
+		stage.frameCount = stageObject.frameCount;
+		stage.frame = 0;
+
 		stage.setMarkers(stageObject.markerLayout[0], stageObject.markerLayout[1]);
 		stage.dancers = new DancersList(stage.dancers.element);
 		var id;
 		for (id in stageObject.dancers) {
 				var o = stageObject.dancers[id];
 				stage.addDancer(o.name, o.gender, o.color);
-				if (o.relx !== null && o.rely !== null) {
-						stage.dancers.array[id].x = o.relx*stage.markerHorzDist;
-						stage.dancers.array[id].y = o.rely*stage.markerVertDist;
-				}
+				stage.dancers.array[id].xs = o.posxs;
+				stage.dancers.array[id].ys = o.posys;
 		}
 }
 
@@ -130,16 +138,16 @@ Stage.prototype.snapV = function(x) {
 
 Stage.prototype._onMouseMove = function(event) {
 		var pos = offsets(event);
-
+		var f = this.frame;
 		if (this.dancers.active !== null)  {
 				var dancer = this.dancers.active;
-				dancer.x = this.snapH(pos.x-8);
-				dancer.y = this.snapV(pos.y-8);
+				dancer.xs[f] = this.snapH(pos.x-8);
+				dancer.ys[f] = this.snapV(pos.y-8);
 		} else {
 				var insideSomeone = false;
 				for (id in this.dancers.array) {
 						var d = this.dancers.array[id];
-						if( insideDancer(d,pos.x,pos.y) ) {
+						if( insideDancer(d,f,pos.x,pos.y) ) {
 								insideSomeone = true;
 								this._focused = d;
 						}
@@ -161,11 +169,12 @@ Stage.prototype._onMouseUp = function(event) {
 }
 Stage.prototype._onClick = function(event) {
 		var pos = offsets(event);
-		console.log("click");
+		var f = this.frame;
+
 		var insideSomeone = false;
 		for (id in this.dancers.array) {
 				var d = this.dancers.array[id];
-				if( insideDancer(d,pos.x,pos.y) && d !== this.dancers.active) {
+				if( insideDancer(d,f,pos.x,pos.y) && d !== this.dancers.active) {
 						insideSomeone = true;
 						this.dancers.makeActive(d);
 				}

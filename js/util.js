@@ -18,8 +18,8 @@ function dist(x1,y1,x2,y2) {
 		return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
 }
 
-function insideDancer(d, x, y) {
-		return dist(d.x, d.y, x, y) <= d.r;
+function insideDancer(d,f, x, y) {
+		return dist(d.xs[f], d.ys[f], x, y) <= d.r;
 }
 
 /* Color Definitions */
