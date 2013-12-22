@@ -9,3 +9,15 @@ function offsets(event) {
 				}
 		}
 }
+
+
+
+/* Color Definitions */
+var COLORS = {
+		pink: "#D61D5C",
+		purple: "#43155B",
+		green: "#64A363",
+		blue: "#078FB1",
+		yellow: "#F7E418",
+		orange: "#A23416"
+};

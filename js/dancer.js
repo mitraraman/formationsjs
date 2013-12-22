@@ -17,8 +17,20 @@ function Dancer(id, name, gender, color) {
 		var badge = '<span class="'+ color +' badge">' + gender + '</span>';
 		this.element = $('<a>' + id +". "+ name + badge + '</a>')
 				.addClass("dancer list-group-item ");
+
+		this.x = null;
+		this.y = null;
 }
 
 Dancer.prototype.draw = function(stage) {
-
+		var ctx = stage.context;
+		if (this.x !== null && this.y !== null) {
+				ctx.save();
+				ctx.beginPath();
+				ctx.fillStyle = COLORS[this.color];
+				ctx.arc(this.x, this.y, 16, 0, 2*Math.PI);
+				ctx.closePath();
+				ctx.fill();
+				ctx.restore();
+		}
 }
