@@ -11,6 +11,7 @@ function Stage(canvas) {
 		}
 
 		this.markers = [];
+		this.markerLayout = [0,0];
 		this.markerHorzDist = 0;
 		this.markerVertDist = 0;
 
@@ -27,6 +28,36 @@ function Stage(canvas) {
 		var type;
 		for (type in this._listeners) {
 				this.canvas.addEventListener(type, this._listeners[type]);
+		}
+}
+
+Stage.prototype.serialize = function() {
+		var stageObject = {
+				markerLayout: this.markerLayout,
+				dancerCount: this.dancerCount,
+				dancers: []
+		};
+		var id;
+		for (id in this.dancers.array) {
+				stageObject.dancers[id] =
+						this.dancers.array[id].serialize(this.markerHorzDist,
+																						 this.markerVertDist);
+		}
+
+		return escape(JSON.stringify(stageObject));
+
+}
+
+Stage.deserializeInto = function(string, stage) {
+		var stageObject = JSON.parse(unescape(string));
+		stage.setMarkers(stageObject.markerLayout[0], stageObject.markerLayout[1]);
+		stage.dancers = new DancersList(stage.dancers.element);
+		var id;
+		for (id in stageObject.dancers) {
+				var o = stageObject.dancers[id];
+				stage.addDancer(o.name, o.gender, o.color);
+				stage.dancers.array[id].x = o.relx*stage.markerHorzDist;
+				stage.dancers.array[id].y = o.rely*stage.markerVertDist;
 		}
 }
 
@@ -50,6 +81,8 @@ Stage.prototype.draw = function() {
 
 Stage.prototype.setMarkers = function(numHorz, numVert) {
 		this.markers = [];
+		this.markerLayout = [numHorz, numVert];
+
 		var spaceHorz = this.canvas.width / (2*(numHorz+1));
 		var spaceVert = this.canvas.height / (2*(numVert+1));
 
@@ -91,6 +124,7 @@ Stage.prototype.snapH = function(x) {
 Stage.prototype.snapV = function(x) {
 		return Math.floor((x+25)/(this.markerVertDist/2))*(this.markerVertDist/2);
 }
+
 Stage.prototype._onMouseMove = function(event) {
 		var pos = offsets(event);
 

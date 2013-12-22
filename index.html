@@ -56,12 +56,22 @@
 				<div class="col-md-9 stage-container">
 					<h2>Front of Stage <small>(frame 1/1)</small></h2>
 					<div class="text-right row display-options">
-						<span class="col-md-offset-7 col-md-3">
+						<span class="col-md-3 text-left">
+							<button type="button" class="btn btn-primary btn-xs" id="save-stage">
+								Save Stage
+							</button>
+							<button type="button" class="btn btn-danger btn-xs" id="clear-stage">
+								Clear Stage
+							</button>
+						</span>
+						</span>
+						<span class="col-md-offset-4 col-md-3">
 							<label><input type="checkbox" value="" id="display-names"/>Display Names</label>
 						</span>
 						<span class="col-md-2">
 							<label><input type="checkbox" id="display-grid" checked="checked">
-								Display Grid</label></span>
+								Display Grid</label>
+						</span>
 					</div>
 					<canvas id="stage-canvas" width="800" height="400" data-resize="full">
 						Your browser does not support the &lt;canvas&gt; element!
@@ -112,35 +122,6 @@
 							<div class="list-group" id="dancers"></div>
 						</div>
 
-
-						<div class="panel panel-default">
-							<div data-toggle="collapse" href="#display-options-form" class="panel-heading">
-								<div class="panel-title text-center">
-									Display Options
-								</div>
-							</div>
-							<div id="display-options-form" class="panel-collapse collapse">
-								<div class="panel-body">
-									<div class="form-group">
-										<div class="checkbox">
-											<label>
-												<input type="checkbox" value="">
-												Display Names
-											</label>
-										</div>
-										<div class="checkbox">
-											<label>
-												<input type="checkbox" value="">
-												Display Grid
-											</label>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-
-
 					</div>
 				</div>
 
@@ -159,8 +140,14 @@
 						var stage  = new Stage(document.getElementById('stage-canvas'));
 						stage.displayNames = $("#display-names").prop("checked");
 						stage.displayGrid = $("#display-grid").prop("checked");
+						var str = loadPageVar("stage");
+						if (str !== "") {
+
+						Stage.deserializeInto(str, stage);
+
+						} else {
+
 						stage.setMarkers(6,3);
-						stage.draw();
 
 						stage.addDancer("Vijay", "M", "yellow");
 						stage.addDancer("Vsai", "M", "yellow");
@@ -174,15 +161,13 @@
 						stage.addDancer("Ankur", "M", "purple");
 						stage.addDancer("Shahana", "F", "purple");
 						stage.addDancer("Sowmya", "F", "purple");
+
+						}
+
+						stage.draw();
 					</script>
 
 					<script type="text/javascript">
-						$("#addDancerButton").click(function() {
-						var name = $("#addDancerName").val();
-  					var gender = $("#addDancerGender").val()[0];
-  					var color = $("#addDancerColor").val().toLowerCase();
-  					stage.addDancer(name, gender, color);
-						});
 
 						$("#display-names").change(function() {
 						stage.displayNames = !stage.displayNames;
@@ -192,6 +177,29 @@
 						$("#display-grid").change(function() {
 						stage.displayGrid = !stage.displayGrid;
 						stage.draw();
+						});
+
+						$("#save-stage").click(function() {
+						var stageString = stage.serialize();
+						window.location.search = "?stage="+stageString;
+						});
+
+						$("#clear-stage").click(function() {
+						var id;
+						stage.dancers.makeInactive();
+						for (id in stage.dancers.array) {
+						stage.dancers.array[id].x = null;
+						stage.dancers.array[id].y = null;
+						}
+
+						window.location.search = "";
+						});
+
+						$("#addDancerButton").click(function() {
+						var name = $("#addDancerName").val();
+  					var gender = $("#addDancerGender").val()[0];
+  					var color = $("#addDancerColor").val().toLowerCase();
+  					stage.addDancer(name, gender, color);
 						});
 					</script>
 

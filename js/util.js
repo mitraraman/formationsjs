@@ -1,3 +1,7 @@
+function loadPageVar (sVar) {
+  return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+}
+
 function offsets(event) {
 		if (event.offsetX !== undefined) {
 				return {x: event.offsetX, y: event.offsetY };
