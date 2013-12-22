@@ -43,8 +43,6 @@
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="#">Home</a></li>
-						<li><a href="#about">About</a></li>
-						<li><a href="#contact">Contact</a></li>
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>
@@ -54,12 +52,17 @@
 			<div class="main-content">
 				<noscript>You must have JavaScript enabled to use this site.</noscript>
 				<div class="col-md-9 stage-container">
-					<h2>Front of Stage <small>(frame 1/1)</small></h2>
+					<div class="row">
+						<h2>
+							<a class="glyphicon glyphicon-chevron-left" id="previous-frame"></a>
+							Frame:
+							(<span id="current-frame">1</span>/
+								<span id="total-frames">1</span>)
+							<a class="glyphicon glyphicon-chevron-right" id="next-frame"></a>
+						</h2>
+					</div>
 					<div class="text-right row display-options">
 						<span class="col-md-4 text-left">
-							<button type="button" class="btn btn-success btn-xs" id="save-stage">
-								Save Stage
-							</button>
 							<button type="button" class="btn btn-info btn-xs" id="make-stage-image"
 											data-toggle="modal" data-target="#stage-image-modal">
 								Make Image
@@ -99,10 +102,44 @@
 						Your browser does not support the &lt;canvas&gt; element!
 					</canvas>
 				</div>
+
 				<div class="col-md-3">
 					<h2>Things</h2>
 					<div class="dancers-list">
 
+						<div class="panel panel-default">
+							<div data-toggle="collapse" href="#formation-options" class="panel-heading">
+								<div class="panel-title text-center">
+									Formation Options
+								</div>
+							</div>
+							<div id="formation-options" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div class="form-group">
+										<button type="button" class="btn btn-default" id="formation-add-frame">
+											<span class="glyphicon glyphicon-plus"></span>
+											Add Frame
+										</button>
+									</div>
+									<div class="form-group">
+										<button type="button" class="btn btn-success"
+														id="formation-save-formation">
+											Save Formation
+										</button>
+									</div>
+									<div class="form-group">
+										<button type="button" class="btn btn-danger" id="formation-clear-all">
+											Clear All Frames
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel panel-default" id="dancers-list-panel">
+							<div class="panel-heading">Dancers</div>
+							<div class="list-group" id="dancers"></div>
+						</div>
 						<div class="panel panel-default">
 							<div data-toggle="collapse" href="#add-dancer-form" class="panel-heading">
 								<div class="panel-title text-center">
@@ -139,10 +176,6 @@
 							</div>
 						</div>
 
-						<div class="panel panel-default" id="dancers-list-panel">
-							<div class="panel-heading">Dancers</div>
-							<div class="list-group" id="dancers"></div>
-						</div>
 
 					</div>
 				</div>
@@ -175,87 +208,15 @@
 					<script src="js/util.js"></script>
 					<script src="js/dancer.js"></script>
 					<script src="js/marker.js"></script>
+					<script src="js/stage.js"></script>
 					<script src="js/main.js"></script>
 
 					<script type="text/javascript">
-						var stage  = new Stage(document.getElementById('stage-canvas'));
-						stage.displayNames = $("#display-names").prop("checked");
-						stage.displayGrid = $("#display-grid").prop("checked");
-						var str = loadPageVar("stage");
-						if (str !== "") {
-
-						Stage.deserializeInto(str, stage);
-
-						} else {
-
-						stage.setMarkers(6,3);
-
-						stage.addDancer("Vijay", "M", "yellow");
-						stage.addDancer("Vsai", "M", "yellow");
-						stage.addDancer("Shals", "F", "yellow");
-						stage.addDancer("Mitra", "F", "yellow");
-						stage.addDancer("Samir", "M", "pink");
-						stage.addDancer("Shawn", "M", "pink");
-						stage.addDancer("Shaina", "F", "pink");
-						stage.addDancer("Yazzy", "F", "pink");
-						stage.addDancer("Sid", "M", "purple");
-						stage.addDancer("Ankur", "M", "purple");
-						stage.addDancer("Shahana", "F", "purple");
-						stage.addDancer("Sowmya", "F", "purple");
-
-						}
-
+						var stage  = main_init('stage-canvas');
+						updateFrameCountUI();
 						stage.draw();
 					</script>
-
-					<script type="text/javascript">
-
-						$("#display-names").change(function() {
-						stage.displayNames = !stage.displayNames;
-						stage.draw();
-						});
-
-						$("#display-grid").change(function() {
-						stage.displayGrid = !stage.displayGrid;
-						stage.draw();
-						});
-
-						$("#save-stage").click(function() {
-						var stageString = stage.serialize();
-						window.location.search = "?stage="+stageString;
-						});
-
-						$("#make-stage-image").click(function() {
-						var str = stage.canvas.toDataURL();
-						document.getElementById("stage-image").src = str;
-						});
-
-						$("#clear-stage").click(function() {
-						var id;
-						stage.dancers.makeInactive();
-						for (id in stage.dancers.array) {
-						stage.dancers.array[id].x = null;
-						stage.dancers.array[id].y = null;
-						}
-
-						window.location.search = "";
-						});
-
-						$("#num-marker-input-submit").click(function() {
-						var numHorz = parseInt($("#num-marker-input-horz").val(), 10);
-						var numVert = parseInt($("#num-marker-input-vert").val(), 10);
-						console.log("Setting", numHorz, numVert);
-						stage.setMarkers(numHorz, numVert);
-						stage.draw();
-						});
-
-						$("#addDancerButton").click(function() {
-						var name = $("#addDancerName").val();
-  					var gender = $("#addDancerGender").val()[0];
-  					var color = $("#addDancerColor").val().toLowerCase();
-  					stage.addDancer(name, gender, color);
-						});
-					</script>
+					<script src="js/ui.js"></script>
 
 					<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 					<script>
