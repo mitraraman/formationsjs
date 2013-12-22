@@ -16,8 +16,8 @@ function offsets(event) {
 var COLORS = {
 		pink: "#D61D5C",
 		purple: "#43155B",
-		green: "#64A363",
+		green: "#299E27",
 		blue: "#078FB1",
 		yellow: "#F7E418",
-		orange: "#A23416"
+		orange: "#FF7032"
 };

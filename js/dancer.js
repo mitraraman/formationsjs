@@ -9,6 +9,11 @@ DancersList.prototype.push = function (dancer) {
 		this.element.append(dancer.element);
 }
 
+DancersList.prototype.deactivate = function() {
+		this.active && this.active.element.removeClass("active");
+		this.active = null;
+}
+
 function Dancer(id, name, gender, color) {
 		this.id = id;
 		this.name = name;
@@ -31,6 +36,11 @@ Dancer.prototype.draw = function(stage) {
 				ctx.arc(this.x, this.y, 16, 0, 2*Math.PI);
 				ctx.closePath();
 				ctx.fill();
+//				ctx.strokeStyle = "black";
+//				ctx.lineWidth = 4;
+//				ctx.strokeText(this.id, this.x, this.y+4);
+				ctx.fillStyle = "darkgrey";
+				ctx.fillText(this.id, this.x, this.y+4);
 				ctx.restore();
 		}
 }

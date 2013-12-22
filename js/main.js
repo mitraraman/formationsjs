@@ -1,6 +1,10 @@
 function Stage(canvas) {
 		this.canvas = canvas;
 		this.context = canvas.getContext('2d');
+		this.context.font = "Bold 16px sans-serif";
+		this.context.textBaseline = "center";
+		this.context.textAlign = "center";
+
 		//In case browser doesn't support dashed lines
 		if (!this.context.setLineDash) {
 				this.context.setLineDash = function() {};
@@ -95,24 +99,22 @@ Stage.prototype._onMouseMove = function(event) {
 		var pos = offsets(event);
 
 		if (this.dancers.active !== null)  {
-				var dancer =this.dancers.active;
+				var dancer = this.dancers.active;
 				dancer.x = this.snapH(pos.x-8);
 				dancer.y = this.snapV(pos.y-8);
 		}
 
 
 		this.draw();
-/*		this.context.save();
-		this.context.beginPath();
-		this.context.fillStyle = "green";
-		this.context.arc(this.snapH(pos.x-8),this.snapV(pos.y-8),16,0,2*Math.PI);
-		this.context.fill();
 
-		this.context.restore();*/
 }
 Stage.prototype._onMouseDown = function(event) {
+		//console.log("mousedown");
 }
 Stage.prototype._onMouseUp = function(event) {
+//		console.log("mouseup");
 }
 Stage.prototype._onClick = function(event) {
+		console.log("click");
+		this.dancers.deactivate();
 }
