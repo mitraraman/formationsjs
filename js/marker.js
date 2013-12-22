@@ -9,23 +9,25 @@ function Marker(x, y, mark) {
 Marker.prototype.draw = function(stage) {
 		var ctx = stage.context;
 		ctx.save();
-		ctx.beginPath();
-      if (this.isMark) {
-  				ctx.setLineDash([3,5])
-					ctx.strokeStyle = "#444";
-			} else {
-  				ctx.setLineDash([1,2])
-					ctx.strokeStyle = "#777";
-			}
+		if(stage.displayGrid) {
+				ctx.beginPath();
+				if (this.isMark) {
+  					ctx.setLineDash([3,5])
+						ctx.strokeStyle = "#BBB";
+				} else {
+  					ctx.setLineDash([1,2])
+						ctx.strokeStyle = "#DDD";
+				}
 
-  	  ctx.moveTo(this.x,this.y);
-		  if (this.isHorz === true) {
-					ctx.lineTo(this.x,stage.canvas.height);
-			} else {
-					ctx.lineTo(stage.canvas.width, this.y);
-			}
-		ctx.closePath();
-		ctx.stroke();
+  			ctx.moveTo(this.x,this.y);
+				if (this.isHorz === true) {
+						ctx.lineTo(this.x,stage.canvas.height);
+				} else {
+						ctx.lineTo(stage.canvas.width, this.y);
+				}
+				ctx.closePath();
+				ctx.stroke();
+		}
 
 		ctx.beginPath();
 		  if (this.isMark) {

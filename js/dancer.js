@@ -40,20 +40,39 @@ Dancer.prototype.draw = function(stage) {
 				ctx.save();
 				ctx.beginPath();
 				ctx.fillStyle = COLORS[this.color];
-				ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
+				if (this.gender === "M") {
+						ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
+				} else {
+						ctx.rect(this.x-this.r, this.y-this.r, this.r*2, this.r*2);
+				}
 				ctx.closePath();
 				ctx.fill();
 				ctx.fillStyle = "darkgrey";
 				ctx.beginPath();
 				ctx.fillText(this.id, this.x, this.y+4);
 				ctx.closePath();
+
+				if(stage.displayNames) {
+						ctx.translate(this.x, this.y-this.r*1.5);
+						console.log("drawing name");
+						ctx.fillStyle="black";
+						ctx.textAlign = "left";
+						ctx.font = "Bold 10pt sans-serif";
+						ctx.fillText(this.name, this.r, this.r);
+				}
+
+
 				ctx.restore();
 		}
 
 		if (stage._focused === this) {
 				ctx.save();
 				ctx.strokeStyle = "black";
-				ctx.arc(this.x, this.y, this.r+3, 0, 2*Math.PI);
+				if (this.gender === "M") {
+						ctx.arc(this.x, this.y, this.r+3, 0, 2*Math.PI);
+				} else {
+						ctx.rect(this.x-this.r-3, this.y-this.r-3, this.r*2+6, this.r*2+6);
+				}
 				ctx.stroke();
 				ctx.restore();
 		}
