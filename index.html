@@ -56,16 +56,20 @@
 				<div class="col-md-9 stage-container">
 					<h2>Front of Stage <small>(frame 1/1)</small></h2>
 					<div class="text-right row display-options">
-						<span class="col-md-3 text-left">
+						<span class="col-md-4 text-left">
 							<button type="button" class="btn btn-success btn-xs" id="save-stage">
 								Save Stage
+							</button>
+							<button type="button" class="btn btn-info btn-xs" id="make-stage-image"
+											data-toggle="modal" data-target="#stage-image-modal">
+								Make Image
 							</button>
 							<button type="button" class="btn btn-danger btn-xs" id="clear-stage">
 								Clear Stage
 							</button>
 						</span>
 
-						<span class="col-md-4">
+						<span class="col-md-4 text-center">
 							<label for="num-marker-input">Markers: </label>
 							<select class="input-xs" id="num-marker-input-horz">
 								<option>4</option>
@@ -77,12 +81,13 @@
 								<option>2</option>
 								<option selected="true">3</option>
 							</select>
-							<button type="button" id="num-marker-input-submit" class="btn btn-info btn-xs">
+							<button type="button" id="num-marker-input-submit"
+											class="btn btn-default btn-xs">
 								Update
 							</button>
 						</span>
 
-						<span class="col-md-3">
+						<span class="col-md-2">
 							<label><input type="checkbox" value="" id="display-names"/>Display Names</label>
 						</span>
 						<span class="col-md-2">
@@ -143,6 +148,25 @@
 				</div>
 
 
+				<div class="modal fade" id="stage-image-modal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title">Export to Image</h4>
+							</div>
+							<div class="modal-body">
+								<img id="stage-image" alt="Right click to save" width="550">
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal-dialog -->
+				</div>
+
+
+
 				<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 				<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
 					<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
@@ -201,6 +225,11 @@
 						window.location.search = "?stage="+stageString;
 						});
 
+						$("#make-stage-image").click(function() {
+						var str = stage.canvas.toDataURL();
+						document.getElementById("stage-image").src = str;
+						});
+
 						$("#clear-stage").click(function() {
 						var id;
 						stage.dancers.makeInactive();
@@ -227,9 +256,6 @@
   					stage.addDancer(name, gender, color);
 						});
 					</script>
-
-
-
 
 					<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 					<script>

@@ -16,7 +16,7 @@ Marker.prototype.draw = function(stage) {
 						ctx.strokeStyle = "#BBB";
 				} else {
   					ctx.setLineDash([1,2])
-						ctx.strokeStyle = "#DDD";
+						ctx.strokeStyle = "#CCC";
 				}
 
   			ctx.moveTo(this.x,this.y);

@@ -110,7 +110,7 @@ Stage.prototype.addDancer = function(name, gender, color) {
 		this.dancerCount++;
 		var self = this;
 		var dancer = new Dancer(this.dancerCount, name, gender, color);
-		dancer.element.click(function() {
+		dancer.element.mousedown(function() {
 				if (self.dancers.active === dancer) {
 						self.dancers.makeInactive();
 				} else {
