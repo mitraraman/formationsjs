@@ -35,6 +35,7 @@ $("#clear-stage").click(function() {
 				stage.dancers.array[id].xs[f] = undefined;
 				stage.dancers.array[id].ys[f] = undefined;
 		}
+		stage.draw();
 });
 
 $("#num-marker-input-submit").click(function() {
