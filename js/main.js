@@ -56,8 +56,10 @@ Stage.deserializeInto = function(string, stage) {
 		for (id in stageObject.dancers) {
 				var o = stageObject.dancers[id];
 				stage.addDancer(o.name, o.gender, o.color);
-				stage.dancers.array[id].x = o.relx*stage.markerHorzDist;
-				stage.dancers.array[id].y = o.rely*stage.markerVertDist;
+				if (o.relx !== null && o.rely !== null) {
+						stage.dancers.array[id].x = o.relx*stage.markerHorzDist;
+						stage.dancers.array[id].y = o.rely*stage.markerVertDist;
+				}
 		}
 }
 
@@ -91,6 +93,7 @@ Stage.prototype.setMarkers = function(numHorz, numVert) {
 
 		for (var i = 1; i < 2*(numHorz+1); i++) {
 				// if i even, then actual marker, else it's a mid
+				console.log("pushing horz");
 				var m = new Marker(spaceHorz*i, 0, (i % 2 === 0));
 
 				this.markers.push(m);

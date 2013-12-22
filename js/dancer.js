@@ -35,25 +35,31 @@ function Dancer(id, name, gender, color) {
 }
 
 Dancer.prototype.serialize = function(markerHorzDist, markerVertDist) {
+
 		var dancerObject = {
 				id: this.id,
 				name: this.name,
 				gender: this.gender,
 				color: this.color,
-				relx: Math.floor(this.x/markerHorzDist),
-				rely: Math.floor(this.y/markerVertDist),
-				posx: this.x,
-				posy: this.y
 		};
+
+		if (this.x === null) {
+				dancerObject['relx'] =  null;
+				dancerObject['posx'] =  null;
+		} else {
+				dancerObject['relx'] =  Math.floor(this.x/markerHorzDist);
+				dancerObject['posx'] =  this.x;
+		}
+
+		if (this.y === null) {
+				dancerObject['rely'] =  null;
+				dancerObject['posy'] =  null;
+		} else {
+				dancerObject['rely'] =  Math.floor(this.y/markerVertDist);
+				dancerObject['posy'] =  this.y;
+		}
+
 		return dancerObject;
-}
-
-Dancer.deserialize = function(obj, markerHorzDist, markerVertDist) {
-		var d = new Dancer(obj.id, obj.name, obj.gender, obj.color);
-		d.x = obj.relx * markerHorzDist;
-		d.y = obj.rely * markerVertDist;
-
-		return d;
 }
 
 Dancer.prototype.draw = function(stage) {

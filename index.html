@@ -64,8 +64,25 @@
 								Clear Stage
 							</button>
 						</span>
+
+						<span class="col-md-4">
+							<label for="num-marker-input">Markers: </label>
+							<select class="input-xs" id="num-marker-input-horz">
+								<option>4</option>
+								<option>5</option>
+								<option selected="true">6</option>
+							</select>
+							<select class="input-xs" id="num-marker-input-vert">
+								<option>1</option>
+								<option>2</option>
+								<option selected="true">3</option>
+							</select>
+							<button type="button" id="num-marker-input-submit" class="btn btn-info btn-xs">
+								Update
+							</button>
 						</span>
-						<span class="col-md-offset-4 col-md-3">
+
+						<span class="col-md-3">
 							<label><input type="checkbox" value="" id="display-names"/>Display Names</label>
 						</span>
 						<span class="col-md-2">
@@ -193,6 +210,14 @@
 						}
 
 						window.location.search = "";
+						});
+
+						$("#num-marker-input-submit").click(function() {
+						var numHorz = parseInt($("#num-marker-input-horz").val(), 10);
+						var numVert = parseInt($("#num-marker-input-vert").val(), 10);
+						console.log("Setting", numHorz, numVert);
+						stage.setMarkers(numHorz, numVert);
+						stage.draw();
 						});
 
 						$("#addDancerButton").click(function() {
