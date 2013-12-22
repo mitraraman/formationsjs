@@ -23,21 +23,22 @@ body {
 		padding: 50px;
 }
 .main-content {
-		padding: 40px 15px;
+		padding: 0px 15px;
 		text-align: center;
 }
 
 #stage-canvas {
 		border: 1px solid #444;
 }
-
 .dancers-list {
 		text-align: left
 }
-}
-.add-dancer-head {
 
+#dancers {
+		max-height: 300px;
+		overflow: auto;
 }
+
 #addDancerGender {
 		width: 100px;
 }

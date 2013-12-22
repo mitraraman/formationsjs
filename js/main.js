@@ -76,13 +76,9 @@ Stage.prototype.addDancer = function(name, gender, color) {
 		var dancer = new Dancer(this.dancerCount, name, gender, color);
 		dancer.element.click(function() {
 				if (self.dancers.active === dancer) {
-						dancer.element.removeClass("active");
-						self.dancers.active = null;
+						self.dancers.makeInactive();
 				} else {
-						self.dancers.active &&
-								self.dancers.active.element.removeClass("active");
-						dancer.element.addClass("active");
-						self.dancers.active = dancer;
+						self.dancers.makeActive(dancer)
 				}
 		});
 		this.dancers.push(dancer);
@@ -102,10 +98,22 @@ Stage.prototype._onMouseMove = function(event) {
 				var dancer = this.dancers.active;
 				dancer.x = this.snapH(pos.x-8);
 				dancer.y = this.snapV(pos.y-8);
+		} else {
+				var insideSomeone = false;
+				for (id in this.dancers.array) {
+						var d = this.dancers.array[id];
+						if( insideDancer(d,pos.x,pos.y) ) {
+								insideSomeone = true;
+								this._focused = d;
+						}
+				}
+				if(!insideSomeone) this._focused = null;
 		}
 
-
 		this.draw();
+		if (this._focused) {
+				console.log("focused on: ", this._focused.name);
+		}
 
 }
 Stage.prototype._onMouseDown = function(event) {
@@ -115,6 +123,16 @@ Stage.prototype._onMouseUp = function(event) {
 //		console.log("mouseup");
 }
 Stage.prototype._onClick = function(event) {
+		var pos = offsets(event);
 		console.log("click");
-		this.dancers.deactivate();
+		var insideSomeone = false;
+		for (id in this.dancers.array) {
+				var d = this.dancers.array[id];
+				if( insideDancer(d,pos.x,pos.y) && d !== this.dancers.active) {
+						insideSomeone = true;
+						this.dancers.makeActive(d);
+				}
+		}
+		if (!insideSomeone) this.dancers.makeInactive();
+
 }

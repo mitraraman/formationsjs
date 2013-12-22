@@ -8,7 +8,7 @@ function Marker(x, y, mark) {
 
 Marker.prototype.draw = function(stage) {
 		var ctx = stage.context;
-
+		ctx.save();
 		ctx.beginPath();
       if (this.isMark) {
   				ctx.setLineDash([3,5])
@@ -34,4 +34,6 @@ Marker.prototype.draw = function(stage) {
 		ctx.closePath();
 		ctx.fill();
 		ctx.stroke();
+
+		ctx.restore();
 }

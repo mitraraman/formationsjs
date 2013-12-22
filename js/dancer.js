@@ -9,7 +9,13 @@ DancersList.prototype.push = function (dancer) {
 		this.element.append(dancer.element);
 }
 
-DancersList.prototype.deactivate = function() {
+DancersList.prototype.makeActive = function(d) {
+		this.makeInactive();
+		d.element.addClass("active");
+		this.active = d;
+
+}
+DancersList.prototype.makeInactive = function() {
 		this.active && this.active.element.removeClass("active");
 		this.active = null;
 }
@@ -23,6 +29,7 @@ function Dancer(id, name, gender, color) {
 		this.element = $('<a>' + id +". "+ name + badge + '</a>')
 				.addClass("dancer list-group-item ");
 
+		this.r = 16
 		this.x = null;
 		this.y = null;
 }
@@ -33,14 +40,21 @@ Dancer.prototype.draw = function(stage) {
 				ctx.save();
 				ctx.beginPath();
 				ctx.fillStyle = COLORS[this.color];
-				ctx.arc(this.x, this.y, 16, 0, 2*Math.PI);
+				ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
 				ctx.closePath();
 				ctx.fill();
-//				ctx.strokeStyle = "black";
-//				ctx.lineWidth = 4;
-//				ctx.strokeText(this.id, this.x, this.y+4);
 				ctx.fillStyle = "darkgrey";
+				ctx.beginPath();
 				ctx.fillText(this.id, this.x, this.y+4);
+				ctx.closePath();
+				ctx.restore();
+		}
+
+		if (stage._focused === this) {
+				ctx.save();
+				ctx.strokeStyle = "black";
+				ctx.arc(this.x, this.y, this.r+3, 0, 2*Math.PI);
+				ctx.stroke();
 				ctx.restore();
 		}
 }
