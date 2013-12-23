@@ -36,14 +36,14 @@ function Stage(canvas) {
 
 Stage.prototype.serialize = function() {
 		var stageObject = {
-				markerLayout: this.markerLayout,
-				dancerCount: this.dancerCount,
-				dancers: [],
-				frameCount: this.frameCount
+				mL: this.markerLayout,
+				dC: this.dancerCount,
+				d: [],
+				f: this.frameCount
 		};
 		var id;
 		for (id in this.dancers.array) {
-				stageObject.dancers[id] =
+				stageObject.d[id] =
 						this.dancers.array[id].serialize(this.markerHorzDist,
 																						 this.markerVertDist);
 		}
@@ -57,17 +57,25 @@ Stage.deserializeInto = function(str, stage) {
 				str[str.length-1] = ' ';
 		}
 		var stageObject = JSON.parse(unescape(str));
-		stage.frameCount = stageObject.frameCount;
+		stage.frameCount = stageObject.f;
 		stage.frame = 0;
 
-		stage.setMarkers(stageObject.markerLayout[0], stageObject.markerLayout[1]);
+		stage.setMarkers(stageObject.mL[0], stageObject.mL[1]);
 		stage.dancers = new DancersList(stage.dancers.element);
 		var id;
-		for (id in stageObject.dancers) {
-				var o = stageObject.dancers[id];
-				stage.addDancer(o.name, o.gender, o.color);
-				stage.dancers.array[id].xs = o.posxs;
-				stage.dancers.array[id].ys = o.posys;
+		for (id in stageObject.d) {
+				var o = stageObject.d[id];
+				stage.addDancer(o.n, o.g, o.c);
+				stage.dancers.array[id].xs = o.xs.map(function(p) {
+						if (p !== undefined) {
+								return p*stage.markerHorzDist;
+						}
+				});
+				stage.dancers.array[id].ys = o.ys.map(function(p) {
+						if (p !== undefined) {
+								return p*stage.markerVertDist;
+						}
+				});
 		}
 }
 

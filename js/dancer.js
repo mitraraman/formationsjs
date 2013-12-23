@@ -37,14 +37,12 @@ function Dancer(id, name, gender, color) {
 Dancer.prototype.serialize = function(markerHorzDist, markerVertDist) {
 
 		var dancerObject = {
-				id: this.id,
-				name: this.name,
-				gender: this.gender,
-				color: this.color,
-				relxs: [],
-				relys: [],
-				posxs: [],
-				posys: [],
+				i: this.id,
+				n: this.name,
+				g: this.gender,
+				c: this.color,
+				xs: [],
+				ys: [],
 		};
 
 		var idx;
@@ -53,13 +51,11 @@ Dancer.prototype.serialize = function(markerHorzDist, markerVertDist) {
 				var y = this.ys[idx];
 
 				if (x !== undefined) {
-						dancerObject['relxs'][idx] =  Math.floor(x/markerHorzDist);
-						dancerObject['posxs'][idx] =  x;
+						dancerObject['xs'][idx] =  Math.round((x/markerHorzDist)*100)/100;
 				}
 
 				if (y !== undefined) {
-						dancerObject['relys'][idx] =  Math.floor(y/markerVertDist);
-						dancerObject['posys'][idx] =  y;
+						dancerObject['ys'][idx] =  Math.round((y/markerVertDist)*100)/100;
 				}
 		}
 		return dancerObject;
