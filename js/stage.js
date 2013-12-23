@@ -137,11 +137,11 @@ Stage.prototype.addDancer = function(name, gender, color) {
 }
 
 Stage.prototype.snapH = function(x) {
-		return Math.floor((x+25)/(this.markerHorzDist/2))*(this.markerHorzDist/2);
+		return Math.floor((x+25)/(this.markerHorzDist/4))*(this.markerHorzDist/4);
 }
 
 Stage.prototype.snapV = function(x) {
-		return Math.floor((x+25)/(this.markerVertDist/2))*(this.markerVertDist/2);
+		return Math.floor((x+25)/(this.markerVertDist/4))*(this.markerVertDist/4);
 }
 
 Stage.prototype._onMouseMove = function(event) {
