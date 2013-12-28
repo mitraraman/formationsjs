@@ -10,19 +10,19 @@ function main_init(elemid) {
 		} else {
 
 				stage.setMarkers(6,3);
-
+				
 				stage.addDancer("Shreepal", "M", "yellow");
-				stage.addDancer("Vsai", "M", "yellow");
-				stage.addDancer("Shals", "F", "yellow");
+				stage.addDancer("Vijay", "M", "yellow");
 				stage.addDancer("Mitra", "F", "yellow");
-				stage.addDancer("Samir", "M", "pink");
+				stage.addDancer("Shaina", "F", "yellow");
+				stage.addDancer("Vishalsai", "M", "pink");
 				stage.addDancer("Shawn", "M", "pink");
-				stage.addDancer("Shaina", "F", "pink");
+				stage.addDancer("Shalini", "F", "pink");
 				stage.addDancer("Yazzy", "F", "pink");
 				stage.addDancer("Sid", "M", "purple");
-				stage.addDancer("Ankur", "M", "purple");
+				stage.addDancer("Samir", "M", "purple");
 				stage.addDancer("Shahana", "F", "purple");
-				stage.addDancer("Sowmya", "F", "purple");
+				stage.addDancer("Sowyma", "F", "purple");
 
 		}
 		return stage;

@@ -11,7 +11,7 @@ function main_init(elemid) {
 
 				stage.setMarkers(6,3);
 
-				stage.addDancer("Vijay", "M", "yellow");
+				stage.addDancer("Shreepal", "M", "yellow");
 				stage.addDancer("Vsai", "M", "yellow");
 				stage.addDancer("Shals", "F", "yellow");
 				stage.addDancer("Mitra", "F", "yellow");
